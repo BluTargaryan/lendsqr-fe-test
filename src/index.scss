@@ -1,0 +1,96 @@
+@use "sass:map";
+
+$font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+$color-scheme: light dark;
+$background-color: #fff;
+$primary-color: #213F7D;
+$secondary-color: #545F7D;
+$accent-color: #39CDCC;
+
+$breakpoints: (
+  "sm": 640px,   // Small devices (modern phones)
+  "md": 768px,   // Medium devices (tablets/larger phones)
+  "lg": 1024px,  // Large devices (laptops/small desktops)
+  "xl": 1280px,  // Extra large (desktops)
+  "default": 1440px,
+);
+
+@mixin respond-to($breakpoint) {
+  @media (min-width: map.get($breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+ 
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  font-family: $font-family;
+  line-height: 1.5;
+  font-weight: 400;
+ 
+  color-scheme: $color-scheme;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: $background-color;
+ 
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+ 
+a {
+  font-weight: 500;
+  color: $accent-color;
+  text-decoration: inherit;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.3s;
+  &:hover {
+    color: $primary-color;
+  }
+}
+ 
+body {
+  min-width: 100vw;
+  height: auto;
+  display: flex;
+  color: $primary-color;
+  overflow-x: hidden;
+}
+
+button{
+  background-color: $accent-color;
+  color:$background-color;
+  border-radius: 8px;
+  border: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 100%;
+  cursor: pointer;
+
+  &:hover{
+    background-color: $primary-color;
+  }
+  &:active{
+    background-color: $secondary-color;
+  }
+}
+
+input{
+  &:focus{
+    outline: none;
+  }
+}
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+ 
