@@ -13,6 +13,7 @@ $breakpoints: (
   "lg": 1024px,  // Large devices (laptops/small desktops)
   "xl": 1280px,  // Extra large (desktops)
   "default": 1440px,
+  "2xl": 1536px
 );
 
 @mixin respond-to($breakpoint) {
@@ -62,6 +63,7 @@ body {
   display: flex;
   color: $primary-color;
   overflow-x: hidden;
+  border: 1px solid black;
 }
 
 button{

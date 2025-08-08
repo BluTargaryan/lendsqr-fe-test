@@ -1,15 +1,49 @@
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import icon from '../assets/images/lendsqr-logo.svg'
 import pablo from '../assets/images/pablo-sign-in.svg'
 import './login.scss'
 
+interface UserData {
+  email: string;
+  token: string;
+  lastLogin: string;
+}
+
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+const navigate = useNavigate();
+const [showPassword, setShowPassword] = useState(false);
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const [error, setError] = useState('');
+
+
+const handleSubmit = (e:FormEvent)=>{
+  e.preventDefault();
+  setError('');
+
+  if (!email || !password) {
+    setError('Please fill in all fields');
+    return;
+  }
+
+  const userData: UserData = {
+    email,
+    token: 'demo-token-' + Date.now(),
+    lastLogin: new Date().toISOString()
+  };
+
+  localStorage.setItem('user', JSON.stringify(userData));
+  navigate('/dashboard');
+}
+
+
+
 
 
   return (
-    <section>
+    <section className="login-section">
       <div className='logo-with-image'>
         <img src={icon} alt="logo" className='logo'/>
         <img src={pablo} alt="pablo" className='pablo'/>
@@ -21,11 +55,12 @@ const LoginPage = () => {
           <p>Enter details to login.</p>
         </div>
         
-        <form>
+        <form onSubmit={handleSubmit}>
+        {error && <div className="error-message">{error}</div>}
           <div className='form-container-input'>
-            <input type="text" placeholder='Email' />
+            <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} />
             <div className='password-container'>
-              <input type={showPassword ? "text" : "password"} placeholder='Password'/>
+              <input type={showPassword ? "text" : "password"} placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}  />
               <span onClick={() => setShowPassword(!showPassword)}>{showPassword ? "HIDE" : "SHOW"}</span>
             </div>
             
