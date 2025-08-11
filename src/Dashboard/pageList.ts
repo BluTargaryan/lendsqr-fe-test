@@ -1,4 +1,4 @@
-type Category = {
+export type Category = {
   name: string;
   pages: string[];
 }
@@ -38,3 +38,4 @@ export const pageList: Category[] = [
     ]
   }
 ];
+

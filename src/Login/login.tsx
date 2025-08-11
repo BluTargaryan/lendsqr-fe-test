@@ -35,7 +35,7 @@ const handleSubmit = (e:FormEvent)=>{
   };
 
   localStorage.setItem('user', JSON.stringify(userData));
-  navigate('/dashboard');
+  navigate('/dashboard/users');
 }
 
 

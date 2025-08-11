@@ -1,31 +1,19 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState } from 'react'
 import './dashboard.scss'
 import Nav from './components/nav'
 import userNotification from '../assets/images/user-notification-icon.png'
 import dropdown from '../assets/images/dropdown.png'
 import { pageList } from './pageList'
+import CategoryDropdown from './components/CategoryDropdown'
+import PageListDropdown from './components/PageListDropdown'
+import { Outlet } from 'react-router-dom'
 const dashboard = () => {
-  const categoryRef = useRef<HTMLDivElement>(null);
   const [activePageCategory, setActivePageCategory] = useState(pageList[0])
   const [isPageCategoryListOpen, setIsPageCategoryListOpen] = useState(false)
   const [activePage, setActivePage] = useState(activePageCategory.pages[0])
-  const pageListRef = useRef<HTMLDivElement>(null);
   const [isPageListOpen, setIsPageListOpen] = useState(false)
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (categoryRef.current && !categoryRef.current.contains(event.target as Node)) {
-        setIsPageCategoryListOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [])
   return (
-    <div>
+    <>
         <Nav/>
 
         <section className='dashboard-section'>
@@ -39,55 +27,28 @@ const dashboard = () => {
               <img src={userNotification} alt="user" className='switch-org-icon'/>
               <span>Dashboard</span>
               </div>
-              <div 
-                ref={categoryRef}
-                className='aside-container category-container'
-                onClick={() => setIsPageCategoryListOpen(!isPageCategoryListOpen)}
-              >
-                <span>{activePageCategory.name}</span>
-                <img src={dropdown} alt="user" className='switch-org-icon'/>
+              <CategoryDropdown
+                activeCategory={activePageCategory}
+                onCategoryChange={setActivePageCategory}
+                categories={pageList}
+                isOpen={isPageCategoryListOpen}
+                onToggle={() => setIsPageCategoryListOpen(!isPageCategoryListOpen)}
+              />
 
-                {
-                  isPageCategoryListOpen && (
-                    <div className='category-page-list'>
-                      {
-                        pageList.map((category) => (
-                          <div className={`category-page-item `} onClick={() => setActivePageCategory(category)}>
-                            <span>{category.name}</span>
-                          </div>
-                          ))
-                      }
-                    </div>
-                  )
-                }
-                </div>
-
-                <div 
-                ref={pageListRef}
-                className='aside-container category-container'
-                onClick={() => setIsPageListOpen(!isPageListOpen)}
-              >
-                <img src={userNotification} alt="user" className='switch-org-icon'/>
-                <span>{activePage}</span>
-                <img src={dropdown} alt="user" className='switch-org-icon'/>
-
-                {
-                  isPageListOpen && (
-                    <div className='category-page-list'>
-                      {
-                        pageList.map((page, index) => (
-                          <div className={`category-page-item `} onClick={() => setActivePage(page.pages[index])}>
-                            <span>{page.pages[index]}</span>
-                          </div>
-                          ))
-                      }
-                    </div>
-                  )
-                }
-                </div>
+              <PageListDropdown
+                activePage={activePage}
+                onPageChange={setActivePage}
+                categories={pageList}
+                isOpen={isPageListOpen}
+                onToggle={() => setIsPageListOpen(!isPageListOpen)}
+              />
             </aside>
+
+            <main className='main-container'>
+              <Outlet/>
+            </main>
         </section>
-    </div>
+    </>
   )
 }
 

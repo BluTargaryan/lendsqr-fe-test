@@ -3,6 +3,7 @@
 $font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 $color-scheme: light dark;
 $background-color: #fff;
+$background-color-2: #FBFBFB;
 $primary-color: #213F7D;
 $secondary-color: #545F7D;
 $accent-color: #39CDCC;
@@ -63,7 +64,6 @@ body {
   display: flex;
   color: $primary-color;
   overflow-x: hidden;
-  border: 1px solid black;
 }
 
 button{
